@@ -24,24 +24,12 @@ SECRET_KEY = os.environ.get(
 # DEBUG = True только локально. На Render задаётся DEBUG=False.
 DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 
-# Разрешённые хосты.
-ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+# ==========================================================
+# ХОСТЫ
+# ==========================================================
+ALLOWED_HOSTS = ['*']
 
-# Render автоматически подставляет RENDER_EXTERNAL_HOSTNAME.
-render_hostname = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
-if render_hostname:
-    ALLOWED_HOSTS.append(render_hostname)
-
-# Разрешаем все поддомены onrender.com
-ALLOWED_HOSTS.append('.onrender.com')
-
-# Для надёжности — разрешаем всё (для курсовой это ок).
-ALLOWED_HOSTS.append('*')
-
-# Доверенные источники для CSRF (формы через HTTPS).
-CSRF_TRUSTED_ORIGINS = []
-if render_hostname:
-    CSRF_TRUSTED_ORIGINS.append(f'https://{render_hostname}')
+CSRF_TRUSTED_ORIGINS = ['https://*.onrender.com']
 
 
 # ==========================================================
