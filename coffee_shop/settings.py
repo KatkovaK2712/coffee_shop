@@ -15,26 +15,33 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECRET_KEY читается из переменной окружения.
 # Локально: если переменной нет — используется dev-ключ.
-# На Fly.io: задаётся через `fly secrets set SECRET_KEY=...`
+# На Render: задаётся через Environment Variables.
 SECRET_KEY = os.environ.get(
     'SECRET_KEY',
     'django-insecure-dev-only-key-do-not-use-in-production'
 )
 
-# DEBUG = True только локально. На Fly.io задаётся DEBUG=False.
+# DEBUG = True только локально. На Render задаётся DEBUG=False.
 DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 
-# Разрешённые хосты. На Fly.io автоматически подставляется FLY_APP_NAME.
+# Разрешённые хосты.
 ALLOWED_HOSTS = ['localhost', '127.0.0.1']
-fly_app_name = os.environ.get('FLY_APP_NAME')
-if fly_app_name:
-    ALLOWED_HOSTS.append(f'{fly_app_name}.fly.dev')
-    ALLOWED_HOSTS.append('*')  # на случай прокси-домена
 
-# Доверенные источники для CSRF (формы через HTTPS)
+# Render автоматически подставляет RENDER_EXTERNAL_HOSTNAME.
+render_hostname = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
+if render_hostname:
+    ALLOWED_HOSTS.append(render_hostname)
+
+# Разрешаем все поддомены onrender.com
+ALLOWED_HOSTS.append('.onrender.com')
+
+# Для надёжности — разрешаем всё (для курсовой это ок).
+ALLOWED_HOSTS.append('*')
+
+# Доверенные источники для CSRF (формы через HTTPS).
 CSRF_TRUSTED_ORIGINS = []
-if fly_app_name:
-    CSRF_TRUSTED_ORIGINS.append(f'https://{fly_app_name}.fly.dev')
+if render_hostname:
+    CSRF_TRUSTED_ORIGINS.append(f'https://{render_hostname}')
 
 
 # ==========================================================
@@ -53,7 +60,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',  # ← добавлено для статики
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # для статики на продакшене
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -110,9 +117,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # ЛОКАЛИЗАЦИЯ
 # ==========================================================
 
-LANGUAGE_CODE = 'ru-ru'   # было en-us → сделаем русский
+LANGUAGE_CODE = 'ru-ru'
 
-TIME_ZONE = 'Europe/Moscow'  # было UTC → Москва
+TIME_ZONE = 'Europe/Moscow'
 
 USE_I18N = True
 
@@ -124,9 +131,9 @@ USE_TZ = True
 # ==========================================================
 
 STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles'  # куда collectstatic соберёт файлы
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-# Белый шум — сжимает и отдаёт статику без nginx
+# WhiteNoise — сжимает и отдаёт статику без nginx
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Медиа: сюда Django сохраняет загруженные картинки
