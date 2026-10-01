@@ -1,0 +1,138 @@
+{% extends 'cafe/base.html' %}
+{% load static %}
+
+{% block title %}🎉 Заказ принят!{% endblock %}
+
+{% block content %}
+<!-- Герой секция -->
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center min-vh-100 align-items-center">
+            <div class="col-lg-6 text-center">
+                <div class="glass-card p-5 floating">
+                    <div class="mb-4">
+                        <div class="cat-emoji" style="font-size: 6rem;">🎉</div>
+                    </div>
+                    
+                    <h1 class="display-2 fw-bold neon-text mb-4" style="color: var(--neon-green);">
+                        Заказ принят!
+                    </h1>
+                    
+                    <p class="lead fs-3 text-light mb-4">
+                        Спасибо за ваш заказ! Наш котик-менеджер уже мурлычет от радости 🐱
+                    </p>
+                    
+                    <div class="glass-card p-4 mb-4" style="background: rgba(0,255,255,0.1); border: 2px solid var(--neon-blue);">
+                        <h4 class="neon-text mb-3" style="color: var(--neon-blue);">
+                            <i class="fas fa-info-circle me-2"></i>Что дальше?
+                        </h4>
+                        <ul class="text-light text-start fs-5">
+                            <li>📞 Ожидайте звонок в течение 15 минут</li>
+                            <li>💰 Подготовьте сумму для оплаты</li>
+                            <li>🍪 Не забудьте забрать бесплатное печенье-котика!</li>
+                            <li>⏰ Приезжайте в указанное время</li>
+                        </ul>
+                    </div>
+
+                    <div class="d-flex flex-wrap gap-3 justify-content-center">
+                        <a href="{% url 'home' %}" class="btn-neon btn-neon-blue">
+                            <i class="fas fa-home me-2"></i>На главную
+                        </a>
+                        <a href="{% url 'menu' %}" class="btn-neon btn-neon-pink">
+                            <i class="fas fa-utensils me-2"></i>Посмотреть меню
+                        </a>
+                        <button onclick="showCatMessage()" class="btn-neon" style="border-color: var(--neon-green); color: var(--neon-green);">
+                            <i class="fas fa-cat me-2"></i>Позвать котика
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Таймер обратного отсчета -->
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="glass-card p-5 text-center">
+                    <h3 class="neon-text mb-4" style="color: var(--neon-purple);">
+                        <i class="fas fa-clock me-2"></i>До звонка осталось:
+                    </h3>
+                    <div id="countdown" class="display-1 fw-bold neon-text" style="color: var(--neon-pink);">
+                        15:00
+                    </div>
+                    <p class="text-light mt-3">Наш котик скоро позвонит для подтверждения заказа</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    // Таймер обратного отсчета
+    let timeLeft = 15 * 60; // 15 минут в секундах
+    
+    function updateCountdown() {
+        const minutes = Math.floor(timeLeft / 60);
+        const seconds = timeLeft % 60;
+        document.getElementById('countdown').textContent = 
+            `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        
+        if (timeLeft > 0) {
+            timeLeft--;
+            setTimeout(updateCountdown, 1000);
+        } else {
+            document.getElementById('countdown').innerHTML = 
+                '<span class="neon-text" style="color: var(--neon-green);">Звонок совершен! 📞</span>';
+        }
+    }
+    
+    document.addEventListener('DOMContentLoaded', function() {
+        updateCountdown();
+        
+        // Запускаем конфетти при загрузке страницы
+        createConfetti();
+    });
+    
+    function createConfetti() {
+        const colors = ['#ff00ff', '#00ffff', '#39ff14', '#bf00ff', '#ffff00'];
+        const container = document.querySelector('.container');
+        
+        for (let i = 0; i < 50; i++) {
+            const confetti = document.createElement('div');
+            confetti.className = 'confetti';
+            confetti.style.cssText = `
+                position: fixed;
+                width: 10px;
+                height: 10px;
+                background: ${colors[Math.floor(Math.random() * colors.length)]};
+                top: -10px;
+                left: ${Math.random() * 100}vw;
+                border-radius: 50%;
+                animation: fall ${Math.random() * 3 + 2}s linear forwards;
+                z-index: 1000;
+            `;
+            document.body.appendChild(confetti);
+            
+            // Удаляем конфетти после анимации
+            setTimeout(() => confetti.remove(), 5000);
+        }
+    }
+</script>
+
+<style>
+    @keyframes fall {
+        to {
+            transform: translateY(100vh) rotate(360deg);
+            opacity: 0;
+        }
+    }
+    
+    .confetti {
+        animation-timing-function: linear;
+    }
+</style>
+{% endblock %}

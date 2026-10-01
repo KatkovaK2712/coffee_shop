@@ -1,0 +1,242 @@
+{% extends 'cafe/base.html' %}
+{% load static %}
+
+{% block title %}🌟 О нашей неоновой кофейне 🐱{% endblock %}
+
+{% block content %}
+<!-- Герой секция -->
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center min-vh-100 align-items-center">
+            <div class="col-lg-8">
+                <div class="glass-card p-5 floating text-center">
+                    <h1 class="display-2 fw-bold neon-text mb-4" style="color: var(--neon-blue);">
+                        О нашей магии <span class="cat-emoji">✨</span>
+                    </h1>
+                    <p class="lead fs-3 text-light mb-4">
+                        Место, где технологии встречаются с уютом, а котики создают атмосферу!
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- История и миссия -->
+<section class="py-5">
+    <div class="container">
+        <div class="row g-5">
+            <div class="col-lg-6">
+                <div class="glass-card p-5 h-100">
+                    {% with about_content=about_content.first %}
+                    <h2 class="neon-text mb-4 display-4" style="color: var(--neon-pink);">
+                        {{ about_content.history_title|default:"Наша история" }}
+                    </h2>
+                    <p class="fs-5 text-light">
+                        {{ about_content.history_text|default:"Всё началось в 2020 году, когда основательница Анна, IT-специалист и любительница котиков, решила объединить технологии и уют. Она создала пространство, где можно работать за компьютером и наслаждаться общением с пушистыми друзьями." }}
+                    </p>
+                    <p class="fs-5 text-light mt-3">
+                        Сегодня мы - уникальное место, где встречаются гики, творческие люди и все, кто ценит комфорт и технологии.
+                    </p>
+                    {% endwith %}
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="glass-card p-5 h-100">
+                    {% with about_content=about_content.first %}
+                    <h2 class="neon-text mb-4 display-4" style="color: var(--neon-green);">
+                        {{ about_content.mission_title|default:"Наша миссия" }}
+                    </h2>
+                    <p class="fs-5 text-light">
+                        {{ about_content.mission_text|default:"Создать пространство, где технологии и природа гармонично сочетаются. Мы верим, что лучшие идеи рождаются в комфортной обстановке, в компании мурлыкающих друзей." }}
+                    </p>
+                    <p class="fs-5 text-light mt-3">
+                        Поддерживаем локальных производителей и приюты для животных. Часть прибыли идет на помощь бездомным котикам.
+                    </p>
+                    {% endwith %}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Наша команда котиков -->
+<section class="py-5">
+    <div class="container">
+        <h2 class="text-center mb-5 display-2 fw-bold neon-text" style="color: var(--neon-purple);">
+            <i class="fas fa-paw me-3"></i>Наша команда котиков
+        </h2>
+        <div class="row g-4">
+            {% for cat in cat_team %}
+            <div class="col-md-3 text-center">
+                <div class="glass-card p-4 h-100 cat-card">
+                    <div class="cat-photo-container mb-3">
+                        {% if cat.image %}
+                            <img src="{{ cat.image.url }}" alt="{{ cat.name }}" class="cat-photo img-fluid rounded-circle">
+                        {% else %}
+                            <div class="feature-icon">
+                                <i class="fas fa-cat"></i>
+                            </div>
+                        {% endif %}
+                    </div>
+                    <h4 class="neon-text mb-2" style="color: var(--neon-pink);">{{ cat.name }}</h4>
+                    <p class="text-light fw-bold mb-2">{{ cat.position }}</p>
+                    <p class="text-light small">{{ cat.description }}</p>
+                </div>
+            </div>
+            {% empty %}
+            <!-- Запасной вариант если котики не добавлены в админке -->
+            <div class="col-md-3 text-center">
+                <div class="glass-card p-4 h-100">
+                    <div class="feature-icon mb-3">
+                        <i class="fas fa-crown"></i>
+                    </div>
+                    <h4 class="neon-text mb-3" style="color: var(--neon-pink);">БАРСИК</h4>
+                    <p class="text-light">Главный дегустатор кофе</p>
+                    <small class="text-light">Отвечает за контроль качества всех напитков</small>
+                </div>
+            </div>
+            <div class="col-md-3 text-center">
+                <div class="glass-card p-4 h-100">
+                    <div class="feature-icon mb-3">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h4 class="neon-text mb-3" style="color: var(--neon-blue);">МУРКА</h4>
+                    <p class="text-light">Менеджер по уюту</p>
+                    <small class="text-light">Создает комфортную атмосферу для гостей</small>
+                </div>
+            </div>
+            <div class="col-md-3 text-center">
+                <div class="glass-card p-4 h-100">
+                    <div class="feature-icon mb-3">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h4 class="neon-text mb-3" style="color: var(--neon-green);">ВАСЬКА</h4>
+                    <p class="text-light">Главный охранник</p>
+                    <small class="text-light">Следит за порядком (в основном спит)</small>
+                </div>
+            </div>
+            <div class="col-md-3 text-center">
+                <div class="glass-card p-4 h-100">
+                    <div class="feature-icon mb-3">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h4 class="neon-text mb-3" style="color: var(--neon-purple);">ЛУНТИК</h4>
+                    <p class="text-light">Младший стажер</p>
+                    <small class="text-light">Учится всем премудростям кофейного дела</small>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Принципы работы -->
+<section class="py-5">
+    <div class="container">
+        <h2 class="text-center mb-5 display-2 fw-bold neon-text" style="color: var(--neon-blue);">
+            <i class="fas fa-gem me-3"></i>Наши принципы
+        </h2>
+        <div class="row g-4">
+            <div class="col-md-4 text-center">
+                <div class="glass-card p-4 h-100">
+                    <div class="feature-icon mb-3" style="background: linear-gradient(45deg, var(--neon-green), var(--neon-blue));">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <h4 class="neon-text mb-3" style="color: var(--neon-green);">Экологичность</h4>
+                    <p class="text-light">Используем биоразлагаемую посуду и перерабатываем отходы</p>
+                </div>
+            </div>
+            <div class="col-md-4 text-center">
+                <div class="glass-card p-4 h-100">
+                    <div class="feature-icon mb-3" style="background: linear-gradient(45deg, var(--neon-pink), var(--neon-purple));">
+                        <i class="fas fa-hands-helping"></i>
+                    </div>
+                    <h4 class="neon-text mb-3" style="color: var(--neon-pink);">Забота</h4>
+                    <p class="text-light">10% прибыли направляем в приюты для животных</p>
+                </div>
+            </div>
+            <div class="col-md-4 text-center">
+                <div class="glass-card p-4 h-100">
+                    <div class="feature-icon mb-3" style="background: linear-gradient(45deg, var(--neon-blue), var(--neon-green));">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                    <h4 class="neon-text mb-3" style="color: var(--neon-blue);">Технологии</h4>
+                    <p class="text-light">Современное оборудование и быстрый Wi-Fi для работы</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA секция -->
+<section class="py-5">
+    <div class="container">
+        <div class="glass-card p-5 text-center">
+            <h2 class="display-3 neon-text mb-4" style="color: var(--neon-pink);">
+                Присоединяйтесь к магии! 🪄
+            </h2>
+            <p class="lead fs-3 text-light mb-4">
+                Станьте частью нашего сообщества любителей кофе и котиков!
+            </p>
+            <div class="d-flex justify-content-center gap-3 flex-wrap">
+                <a href="{% url 'contacts' %}" class="btn-neon btn-neon-blue btn-lg">
+                    <i class="fas fa-map-marker-alt me-2"></i>Найти нас
+                </a>
+                <a href="{% url 'reviews' %}" class="btn-neon btn-neon-pink btn-lg">
+                    <i class="fas fa-star me-2"></i>Оставить отзыв
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .cat-photo-container {
+        width: 120px;
+        height: 120px;
+        margin: 0 auto;
+        position: relative;
+    }
+    
+    .cat-photo {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border: 3px solid var(--neon-pink);
+        box-shadow: 0 0 20px var(--neon-pink);
+        transition: all 0.3s ease;
+    }
+    
+    .cat-card:hover .cat-photo {
+        border-color: var(--neon-purple);
+        box-shadow: 0 0 30px var(--neon-purple);
+        transform: scale(1.1) rotate(5deg);
+    }
+    
+    .cat-card {
+        transition: all 0.3s ease;
+    }
+    
+    .cat-card:hover {
+        transform: translateY(-10px);
+        border: 2px solid var(--neon-blue) !important;
+    }
+</style>
+
+<script>
+    // Анимация появления котиков
+    document.addEventListener('DOMContentLoaded', function() {
+        const catCards = document.querySelectorAll('.cat-card');
+        catCards.forEach((card, index) => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(50px) scale(0.8)';
+            setTimeout(() => {
+                card.style.transition = 'all 0.6s ease';
+                card.style.opacity = '1';
+                card.style.transform = 'translateY(0) scale(1)';
+            }, index * 200);
+        });
+    });
+</script>
+{% endblock %}

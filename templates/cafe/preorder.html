@@ -1,0 +1,167 @@
+{% extends 'cafe/base.html' %}
+{% load static %}
+
+{% block title %}⚡ Быстрый неоновый заказ 🚀{% endblock %}
+
+{% block content %}
+<!-- Герой секция -->
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center min-vh-100 align-items-center">
+            <div class="col-lg-8">
+                <div class="glass-card p-5 floating text-center">
+                    <h1 class="display-2 fw-bold neon-text mb-4" style="color: var(--neon-green);">
+                        Быстрый заказ <span class="cat-emoji">⚡</span>
+                    </h1>
+                    <p class="lead fs-3 text-light mb-4">
+                        Забронируйте онлайн - заберите без ожидания!
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Форма заказа -->
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <div class="glass-card p-5">
+                    <h2 class="text-center mb-4 display-3 neon-text" style="color: var(--neon-pink);">
+                        <i class="fas fa-edit me-3"></i>Оформление заказа
+                    </h2>
+                    
+                    <form method="post">
+                        {% csrf_token %}
+                        
+                        <div class="row g-4">
+                            <div class="col-md-6">
+                                <label class="form-label text-light fs-5">Ваше имя</label>
+                                {{ form.customer_name }}
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <label class="form-label text-light fs-5">Телефон</label>
+                                {{ form.phone }}
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <label class="form-label text-light fs-5">Email</label>
+                                {{ form.email }}
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <label class="form-label text-light fs-5">Время самовывоза</label>
+                                {{ form.pickup_time }}
+                            </div>
+                            
+                            <div class="col-12">
+                                <label class="form-label text-light fs-5">Комментарий к заказу</label>
+                                <textarea class="form-control glass-input" name="comment" rows="4" placeholder="Особые пожелания, аллергии и т.д." style="background: rgba(255,255,255,0.1); border: 2px solid var(--neon-blue); color: white; padding: 15px; border-radius: 15px;"></textarea>
+                            </div>
+                            
+                            <div class="col-12">
+                                <div class="glass-card p-4 mt-3" style="background: rgba(0,255,255,0.1); border: 2px solid var(--neon-blue);">
+                                    <h5 class="neon-text mb-3" style="color: var(--neon-blue);">
+                                        <i class="fas fa-info-circle me-2"></i>Информация
+                                    </h5>
+                                    <p class="text-light mb-0">
+                                        🐱 После оформления заказа наш котик-менеджер свяжется с вами для подтверждения в течение 15 минут
+                                    </p>
+                                </div>
+                            </div>
+                            
+                            <div class="col-12 text-center mt-4">
+                                <button type="submit" class="btn-neon btn-neon-pink btn-lg">
+                                    <i class="fas fa-bolt me-2"></i>Оформить заказ
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Преимущества -->
+<section class="py-5">
+    <div class="container">
+        <h2 class="text-center mb-5 display-2 fw-bold neon-text" style="color: var(--neon-purple);">
+            <i class="fas fa-gift me-3"></i>Преимущества предзаказа
+        </h2>
+        <div class="row g-4">
+            <div class="col-md-4 text-center">
+                <div class="glass-card p-4 h-100">
+                    <div class="feature-icon mb-3">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h4 class="neon-text mb-3" style="color: var(--neon-pink);">Экономия времени</h4>
+                    <p class="text-light">Не нужно ждать приготовления - заказ будет готов к указанному времени</p>
+                </div>
+            </div>
+            <div class="col-md-4 text-center">
+                <div class="glass-card p-4 h-100">
+                    <div class="feature-icon mb-3">
+                        <i class="fas fa-percentage"></i>
+                    </div>
+                    <h4 class="neon-text mb-3" style="color: var(--neon-blue);">Скидка 10%</h4>
+                    <p class="text-light">Все предзаказы получают специальную скидку</p>
+                </div>
+            </div>
+            <div class="col-md-4 text-center">
+                <div class="glass-card p-4 h-100">
+                    <div class="feature-icon mb-3">
+                        <i class="fas fa-cookie"></i>
+                    </div>
+                    <h4 class="neon-text mb-3" style="color: var(--neon-green);">Бесплатный подарок</h4>
+                    <p class="text-light">Печенье в форме котика к каждому заказу</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<style>
+    .glass-input {
+        background: rgba(255,255,255,0.1) !important;
+        border: 2px solid var(--neon-pink) !important;
+        color: white !important;
+        padding: 15px !important;
+        border-radius: 15px !important;
+        transition: all 0.3s ease !important;
+    }
+    
+    .glass-input:focus {
+        background: rgba(255,255,255,0.2) !important;
+        border-color: var(--neon-purple) !important;
+        box-shadow: 0 0 20px var(--neon-purple) !important;
+        color: white !important;
+    }
+    
+    .glass-input::placeholder {
+        color: rgba(255, 255, 255, 0.7) !important;
+    }
+    
+    select.glass-input {
+        appearance: none;
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23ff00ff' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e") !important;
+        background-position: right 15px center !important;
+        background-repeat: no-repeat !important;
+        background-size: 20px !important;
+    }
+</style>
+
+<script>
+    // Стилизация формы
+    document.addEventListener('DOMContentLoaded', function() {
+        const inputs = document.querySelectorAll('input, select, textarea');
+        inputs.forEach(input => {
+            if (!input.classList.contains('glass-input')) {
+                input.classList.add('glass-input');
+            }
+        });
+    });
+</script>
+{% endblock %}

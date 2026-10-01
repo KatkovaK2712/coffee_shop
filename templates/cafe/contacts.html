@@ -1,0 +1,200 @@
+{% extends 'cafe/base.html' %}
+{% load static %}
+
+{% block title %}📍 Наши неоновые контакты{% endblock %}
+
+{% block content %}
+<!-- Герой секция -->
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center min-vh-100 align-items-center">
+            <div class="col-lg-8">
+                <div class="glass-card p-5 floating text-center">
+                    <h1 class="display-2 fw-bold neon-text mb-4" style="color: var(--neon-green);">
+                        Наши контакты <span class="cat-emoji">📞</span>
+                    </h1>
+                    <p class="lead fs-3 text-light mb-4">
+                        Найди нас в неоновом сердце города!
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Контактная информация -->
+<section class="py-5">
+    <div class="container">
+        <h2 class="text-center mb-5 display-2 fw-bold neon-text" style="color: var(--neon-blue);">
+            <i class="fas fa-info-circle me-3"></i>Контактная информация
+        </h2>
+        <div class="row g-4">
+            <div class="col-md-6">
+                <div class="glass-card p-5 h-100">
+                    <div class="text-center">
+                        <div class="feature-icon mb-4">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <h3 class="neon-text mb-3" style="color: var(--neon-pink);">Адрес</h3>
+                        {% with contacts_content=contacts_content.first %}
+                        <p class="fs-4 text-light">
+                            {{ contacts_content.address|default:"г. Москва, ул. Котикова, д. 15" }}
+                        </p>
+                        <p class="text-light">м. Пушкинская</p>
+                        {% endwith %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="glass-card p-5 h-100">
+                    <div class="text-center">
+                        <div class="feature-icon mb-4">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <h3 class="neon-text mb-3" style="color: var(--neon-green);">Часы работы</h3>
+                        {% with contacts_content=contacts_content.first %}
+                        <p class="fs-4 text-light">
+                            {{ contacts_content.work_hours|default:"Пн-Пт: 8:00-22:00<br>Сб-Вс: 9:00-23:00" }}
+                        </p>
+                        {% endwith %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row g-4 mt-4">
+            <div class="col-md-6">
+                <div class="glass-card p-5 h-100">
+                    <div class="text-center">
+                        <div class="feature-icon mb-4">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <h3 class="neon-text mb-3" style="color: var(--neon-blue);">Телефон</h3>
+                        {% with contacts_content=contacts_content.first %}
+                        <p class="fs-3 text-light">
+                            {{ contacts_content.phone|default:"+7 (999) 123-45-67" }}
+                        </p>
+                        {% endwith %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="glass-card p-5 h-100">
+                    <div class="text-center">
+                        <div class="feature-icon mb-4">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <h3 class="neon-text mb-3" style="color: var(--neon-purple);">Email</h3>
+                        {% with contacts_content=contacts_content.first %}
+                        <p class="fs-4 text-light">
+                            {{ contacts_content.email|default:"hello@cozycat.ru" }}
+                        </p>
+                        {% endwith %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Как добраться -->
+<section class="py-5">
+    <div class="container">
+        <h2 class="text-center mb-5 display-2 fw-bold neon-text" style="color: var(--neon-pink);">
+            <i class="fas fa-route me-3"></i>Как добраться
+        </h2>
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <div class="glass-card p-5">
+                    <div class="row text-center g-4">
+                        <div class="col-md-4">
+                            <div class="feature-icon" style="width: 80px; height: 80px;">
+                                <i class="fas fa-subway"></i>
+                            </div>
+                            <h4 class="neon-text mb-3" style="color: var(--neon-blue);">Метро</h4>
+                            <p class="text-light">Пушкинская - 5 минут пешком</p>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="feature-icon" style="width: 80px; height: 80px;">
+                                <i class="fas fa-bus"></i>
+                            </div>
+                            <h4 class="neon-text mb-3" style="color: var(--neon-green);">Автобус</h4>
+                            <p class="text-light">№ 15, 23, 45 - остановка "Улица Котикова"</p>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="feature-icon" style="width: 80px; height: 80px;">
+                                <i class="fas fa-car"></i>
+                            </div>
+                            <h4 class="neon-text mb-3" style="color: var(--neon-purple);">Парковка</h4>
+                            <p class="text-light">Бесплатная во дворе (10 мест)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Форма обратной связи -->
+<section class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <div class="glass-card p-5">
+                    <h2 class="text-center mb-4 display-3 neon-text" style="color: var(--neon-blue);">
+                        <i class="fas fa-paper-plane me-3"></i>Напишите нам
+                    </h2>
+                    <form>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <input type="text" class="form-control glass-input" placeholder="Ваше имя" style="background: rgba(255,255,255,0.1); border: 2px solid var(--neon-pink); color: white; padding: 15px; border-radius: 15px;">
+                            </div>
+                            <div class="col-md-6">
+                                <input type="email" class="form-control glass-input" placeholder="Ваш email" style="background: rgba(255,255,255,0.1); border: 2px solid var(--neon-blue); color: white; padding: 15px; border-radius: 15px;">
+                            </div>
+                            <div class="col-12">
+                                <textarea class="form-control glass-input" rows="5" placeholder="Ваше сообщение..." style="background: rgba(255,255,255,0.1); border: 2px solid var(--neon-green); color: white; padding: 15px; border-radius: 15px;"></textarea>
+                            </div>
+                            <div class="col-12 text-center">
+                                <button type="submit" class="btn-neon btn-neon-pink btn-lg mt-3">
+                                    <i class="fas fa-paper-plane me-2"></i>Отправить сообщение
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA секция -->
+<section class="py-5">
+    <div class="container">
+        <div class="glass-card p-5 text-center">
+            <h2 class="display-3 neon-text mb-4" style="color: var(--neon-green);">
+                Ждем в гости! 🐱
+            </h2>
+            <p class="lead fs-3 text-light mb-4">
+                Наши котики уже заждались новых друзей!
+            </p>
+            <button onclick="showCatMessage()" class="btn-neon btn-neon-purple btn-lg">
+                <i class="fas fa-cat me-2"></i>Позвать котика
+            </button>
+        </div>
+    </div>
+</section>
+
+<style>
+    .glass-input::placeholder {
+        color: rgba(255, 255, 255, 0.7) !important;
+    }
+    
+    .glass-input:focus {
+        background: rgba(255, 255, 255, 0.2) !important;
+        border-color: var(--neon-purple) !important;
+        box-shadow: 0 0 20px var(--neon-purple) !important;
+        color: white !important;
+    }
+</style>
+{% endblock %}

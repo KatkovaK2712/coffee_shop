@@ -1,0 +1,249 @@
+{% extends 'cafe/base.html' %}
+{% load static %}
+
+{% block title %}🎨 Неоновая кофейня с котиками!{% endblock %}
+
+{% block content %}
+<!-- Герой секция -->
+<section class="py-5">
+    <div class="container">
+        <div class="row align-items-center min-vh-100">
+            <div class="col-lg-6">
+                <div class="glass-card p-5 floating">
+                    <h1 class="display-3 fw-bold neon-text mb-4" style="color: var(--neon-pink);">
+                        Добро пожаловать в <span class="cat-emoji">🐱</span> неоновый рай!
+                    </h1>
+                    <p class="lead mb-4 fs-4">
+                        Где ароматный кофе встречается с мурлыкающими котиками! 
+                        Наслаждайтесь премиальными напитками в компании наших пушистых бариста.
+                    </p>
+                    <div class="d-flex flex-wrap gap-3">
+                        <a href="{% url 'menu' %}" class="btn-neon btn-neon-pink">
+                            <i class="fas fa-bolt me-2"></i>Исследовать меню
+                        </a>
+                        <a href="{% url 'preorder' %}" class="btn-neon btn-neon-blue">
+                            <i class="fas fa-rocket me-2"></i>Супер заказ
+                        </a>
+                        <button onclick="showCatMessage()" class="btn-neon" style="border-color: var(--neon-green); color: var(--neon-green);">
+                            <i class="fas fa-magic me-2"></i>Магия котика
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 text-center">
+                <div class="position-relative">
+                    {% with home_content=home_content.first %}
+                        {% if home_content and home_content.main_image %}
+                            <img src="{{ home_content.main_image.url }}" alt="Главный котик" class="img-fluid rounded-3 glass-card pulse" style="max-height: 500px;">
+                        {% else %}
+                            <img src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?ixlib=rb-4.0.1&auto=format&fit=crop&w=800&q=80" alt="Главный котик" class="img-fluid rounded-3 glass-card pulse" style="max-height: 500px;">
+                        {% endif %}
+                    {% endwith %}
+                    <div class="position-absolute top-0 start-0 mt-3 ms-3">
+                        <span class="badge special-badge px-3 py-2 fs-6">⚡ Горячие акции!</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Акционные предложения -->
+<section class="py-5">
+    <div class="container">
+        <h2 class="text-center mb-5 display-2 fw-bold neon-text" style="color: var(--neon-blue);">
+            <i class="fas fa-bolt me-3"></i>Горячие предложения
+        </h2>
+        <div class="row g-4">
+            {% for item in special_items %}
+            <div class="col-md-4">
+                <div class="glass-card menu-item-card h-100">
+                    <div class="position-relative overflow-hidden">
+                        {% if item.image %}
+                            <img src="{{ item.image.url }}" class="card-img-top" alt="{{ item.name }}">
+                        {% else %}
+                            <img src="https://images.unsplash.com/photo-1544787219-7f47ccb76574?ixlib=rb-4.0.1&auto=format&fit=crop&w=400&q=80" class="card-img-top" alt="{{ item.name }}">
+                        {% endif %}
+                        <div class="position-absolute top-0 end-0 m-3">
+                            <span class="badge special-badge px-3 py-2 fs-6">АКЦИЯ</span>
+                        </div>
+                    </div>
+                    <div class="card-body p-4">
+                        <h5 class="card-title fw-bold fs-4 neon-text" style="color: var(--neon-green);">{{ item.name }}</h5>
+                        <p class="card-text text-light">{{ item.description }}</p>
+                        <div class="d-flex justify-content-between align-items-center mt-4">
+                            <span class="price-tag">{{ item.price }} ₽</span>
+                            <button class="btn-neon btn-neon-pink btn-sm">
+                                <i class="fas fa-cart-plus me-1"></i>В корзину
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12 text-center">
+                <div class="glass-card p-5">
+                    <i class="fas fa-mug-hot fa-3x neon-text mb-3" style="color: var(--neon-purple);"></i>
+                    <h3 class="neon-text" style="color: var(--neon-blue);">Скоро появятся новые акции!</h3>
+                    <p class="text-light">Наши котики усердно работают над новыми предложениями 🐱</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- О кофейне -->
+<section class="py-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <div class="glass-card p-5">
+                    {% with home_content=home_content.first %}
+                    <h2 class="neon-text mb-4 display-4" style="color: var(--neon-green);">
+                        {{ home_content.philosophy_title|default:"Наша философия" }}
+                    </h2>
+                    <p class="fs-5 text-light mb-4">
+                        {{ home_content.philosophy_text|default:"Мы создали место, где можно насладиться не только превосходным кофе, но и пообщаться с нашими пушистыми хозяевами - котиками!" }}
+                    </p>
+                    {% endwith %}
+                    <div class="row text-light">
+                        <div class="col-6">
+                            <p><i class="fas fa-check me-2" style="color: var(--neon-green);"></i>Свежие зерна каждый день</p>
+                            <p><i class="fas fa-check me-2" style="color: var(--neon-green);"></i>Домашняя выпечка</p>
+                        </div>
+                        <div class="col-6">
+                            <p><i class="fas fa-check me-2" style="color: var(--neon-green);"></i>Уют с книгами и котиками</p>
+                            <p><i class="fas fa-check me-2" style="color: var(--neon-green);"></i>Бесплатный Wi-Fi</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 text-center">
+                {% with home_content=home_content.first %}
+                    {% if home_content and home_content.philosophy_image %}
+                        <img src="{{ home_content.philosophy_image.url }}" alt="Философия" class="img-fluid rounded-3 glass-card floating">
+                    {% else %}
+                        <img src="https://images.unsplash.com/photo-1573865526739-10659fec78a5?ixlib=rb-4.0.1&auto=format&fit=crop&w=800&q=80" alt="Философия" class="img-fluid rounded-3 glass-card floating">
+                    {% endif %}
+                {% endwith %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Преимущества -->
+<section class="py-5">
+    <div class="container">
+        <h2 class="text-center mb-5 display-2 fw-bold neon-text" style="color: var(--neon-purple);">
+            <i class="fas fa-star me-3"></i>Почему выбирают нас?
+        </h2>
+        <div class="row g-4">
+            <div class="col-md-3 text-center">
+                <div class="feature-icon">
+                    <i class="fas fa-cat"></i>
+                </div>
+                <h4 class="neon-text" style="color: var(--neon-pink);">Котики-бариста</h4>
+                <p class="text-light">Наши пушистые сотрудники создают уникальную атмосферу</p>
+            </div>
+            <div class="col-md-3 text-center">
+                <div class="feature-icon">
+                    <i class="fas fa-coffee"></i>
+                </div>
+                <h4 class="neon-text" style="color: var(--neon-blue);">Превосходный кофе</h4>
+                <p class="text-light">Только отборные зерна и профессиональное оборудование</p>
+            </div>
+            <div class="col-md-3 text-center">
+                <div class="feature-icon">
+                    <i class="fas fa-home"></i>
+                </div>
+                <h4 class="neon-text" style="color: var(--neon-green);">Уютное гнездышко</h4>
+                <p class="text-light">Идеальное место для работы, встреч и отдыха</p>
+            </div>
+            <div class="col-md-3 text-center">
+                <div class="feature-icon">
+                    <i class="fas fa-magic"></i>
+                </div>
+                <h4 class="neon-text" style="color: var(--neon-purple);">Магия атмосферы</h4>
+                <p class="text-light">Неоновое оформление и волшебная атмосфера</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Отзывы -->
+<section class="py-5">
+    <div class="container">
+        <h2 class="text-center mb-5 display-2 fw-bold neon-text" style="color: var(--neon-blue);">
+            <i class="fas fa-comments me-3"></i>Что говорят гости
+        </h2>
+        <div class="row">
+            {% for review in reviews %}
+            <div class="col-md-4 mb-4">
+                <div class="glass-card h-100 p-4">
+                    <div class="d-flex justify-content-between align-items-start mb-3">
+                        <div>
+                            <h5 class="card-title mb-1 neon-text" style="color: var(--neon-pink);">{{ review.author_name }}</h5>
+                            <small class="text-light">{{ review.created_at|date:"d.m.Y H:i" }}</small>
+                        </div>
+                        <div class="neon-text" style="color: var(--neon-green);">
+                            {% for i in "12345" %}
+                                {% if forloop.counter <= review.rating %}
+                                    ⭐
+                                {% else %}
+                                    ☆
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <p class="card-text text-light">"{{ review.text }}"</p>
+                    {% if review.image %}
+                    <div class="mt-3">
+                        <img src="{{ review.image.url }}" alt="Котик от {{ review.author_name }}" 
+                             class="img-fluid rounded" style="max-height: 200px;">
+                        <small class="text-light d-block mt-1">🐱 Пушистый друг автора</small>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            {% empty %}
+            <div class="col-12 text-center">
+                <div class="glass-card p-5">
+                    <div class="cat-emoji">😿</div>
+                    <h3 class="neon-text" style="color: var(--neon-pink);">Пока нет отзывов</h3>
+                    <p class="text-light">Станьте первым, кто поделится впечатлениями!</p>
+                    <p class="text-light">Наши котики будут очень рады вашему отзыву 🐾</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="text-center mt-4">
+            <a href="{% url 'reviews' %}" class="btn-neon btn-neon-purple">
+                <i class="fas fa-eye me-2"></i>Все отзывы
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- CTA секция -->
+<section class="py-5">
+    <div class="container">
+        <div class="glass-card p-5 text-center">
+            <h2 class="display-3 neon-text mb-4" style="color: var(--neon-green);">
+                Готовы к магии? 🪄
+            </h2>
+            <p class="lead fs-3 text-light mb-4">
+                Приходите и ощутите неоновую атмосферу нашей кофейни!
+            </p>
+            <div class="d-flex justify-content-center gap-3 flex-wrap">
+                <a href="{% url 'contacts' %}" class="btn-neon btn-neon-pink btn-lg">
+                    <i class="fas fa-map-marker-alt me-2"></i>Найти нас
+                </a>
+                <a href="{% url 'preorder' %}" class="btn-neon btn-neon-blue btn-lg">
+                    <i class="fas fa-bolt me-2"></i>Забронировать
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

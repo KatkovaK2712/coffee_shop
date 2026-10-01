@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.py[cod]
+*.so
+.Python
+venv/
+env/
+.venv/
+*.egg-info/
+
+# Django
+*.log
+/staticfiles/
+
+# Секреты и локальные настройки
+.env
+.env.*
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Системное
+Thumbs.db
+.DS_Store
