@@ -139,7 +139,10 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # Медиа: сюда Django сохраняет загруженные картинки
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
-
+# Для курсового проекта: WhiteNoise раздаёт media-файлы в продакшене.
+WHITENOISE_ROOT = MEDIA_ROOT
+WHITENOISE_USE_FINDERS = True
+WHITENOISE_ALLOW_ALL_ORIGINS = True
 
 # ==========================================================
 # ПРОЧЕЕ
