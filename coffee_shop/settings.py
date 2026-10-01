@@ -134,3 +134,17 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # ==========================================================
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# ==========================================================
+# ПРОКСИ (для Render)
+# ==========================================================
+
+# Render работает через прокси и передаёт протокол в заголовке
+# X-Forwarded-Proto. Без этих настроек Django не понимает, что запрос
+# пришёл по HTTPS, и может отклонять его с ошибкой 400 Bad Request.
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+# Разрешаем Django использовать заголовок X-Forwarded-Host,
+# который прокси Render подставляет автоматически.
+USE_X_FORWARDED_HOST = True
+USE_X_FORWARDED_PORT = True
